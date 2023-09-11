@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "885ba3fc-3190-44ba-ba51-148f83da1fe9",
+		"name": "fdbi2023-api3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4680186"
+	},
+	"item": [
+		{
+			"name": "raiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8180/api3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8180",
+					"path": [
+						"api3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Cidades",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Cidade 1 existe\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cidade1\");\r",
+							"});\r",
+							"pm.test(\"Cidade 2 existe\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cidade2\");\r",
+							"});\r",
+							"pm.test(\"Cidade 3 existe\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cidade3\");\r",
+							"});\r",
+							"pm.test(\"Retornou um array de registros\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"[\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"]\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"}\");\r",
+							"});\r",
+							"pm.test(\"Retorno em JSON\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(jsonData[0].id);\r",
+							"    pm.expect(jsonData[0].id).to.eql(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE-api3}}/cidade/list",
+					"host": [
+						"{{URL_BASE-api3}}"
+					],
+					"path": [
+						"cidade",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cidades",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Cidade 1 existe\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cidade1\");\r",
+							"});\r",
+							"pm.test(\"Id da cidade = 1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(jsonData.id);\r",
+							"    pm.expect(jsonData.id).to.eql(1);\r",
+							"});\r",
+							"pm.test(\"Retorno em JSON\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"}\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE-api3}}/cidade/get/?id=1",
+					"host": [
+						"{{URL_BASE-api3}}"
+					],
+					"path": [
+						"cidade",
+						"get",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Cidade",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Cidade 5 criada\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cidade5\");\r",
+							"});\r",
+							"pm.test(\"Retorno em JSON\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"}\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Cidade5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE-api3}}/cidade/save",
+					"host": [
+						"{{URL_BASE-api3}}"
+					],
+					"path": [
+						"cidade",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Cidade",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Cidade 5 alterada\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Cidade5...\");\r",
+							"});\r",
+							"pm.test(\"Retorno em JSON\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"}\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Cidade5...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL_BASE-api3}}/cidade/update/5",
+					"host": [
+						"{{URL_BASE-api3}}"
+					],
+					"path": [
+						"cidade",
+						"update",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cidades by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Cidade 4 excluída\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\":true\");\r",
+							"});\r",
+							"pm.test(\"Retorno em JSON\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"{\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"}\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL_BASE-api3}}/cidade/delete/5",
+					"host": [
+						"{{URL_BASE-api3}}"
+					],
+					"path": [
+						"cidade",
+						"delete",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "URL_BASE-api3",
+			"value": "http://localhost:8180/api3"
+		}
+	]
+}
